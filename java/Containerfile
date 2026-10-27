@@ -3,6 +3,9 @@ FROM $BASE_IMG AS java-runner
 
 USER root
 
-RUN dnf install -y java-25-openjdk-devel.x86_64
+RUN dnf install -y java-25-openjdk-devel.x86_64 && \
+    dnf -y upgrade --security && \
+    update-ca-trust && \
+    dnf clean all
 
 USER $UID
