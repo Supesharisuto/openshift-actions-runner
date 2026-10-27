@@ -11,6 +11,7 @@ USER root
 RUN dnf -y update && \
     dnf -y install xz slirp4netns buildah podman fuse-overlayfs shadow-utils --exclude container-selinux && \
     dnf -y reinstall shadow-utils && \
+    update-ca-trust && \
     dnf clean all
 
 ARG OC_VERSION=4.7.4
@@ -21,7 +22,7 @@ RUN curl -sSLf https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/
 ENV BUILDAH_ISOLATION=chroot
 ENV BUILDAH_LAYERS=true
 
-RUN curl https:///raw.githubusercontent.com/containers/image_build/main/buildah/containers.conf --output-dir /etc/containers/
+RUN curl https://raw.githubusercontent.com/containers/image_build/main/buildah/containers.conf --output-dir /etc/containers/
 
 RUN chgrp -R 0 /etc/containers/ && \
     chmod -R a+r /etc/containers/ && \
