@@ -7,8 +7,7 @@ ARG KUBERNETES_RELEASE=v1.34.2
 RUN curl -LO https://dl.k8s.io/release/${KUBERNETES_RELEASE}/bin/linux/amd64/kubectl
 RUN sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
-RUN dnf -y upgrade --security && \
-    dnf -y install \
+RUN dnf -y install \
     openldap-clients \
     iputils \
     samba-client \
@@ -16,6 +15,8 @@ RUN dnf -y upgrade --security && \
     gettext-envsubst \
     java-25-openjdk-devel \
     python3-winrm && \
+    dnf -y upgrade --security && \
+    update-ca-trust && \
     dnf clean all
 
 ARG MAVEN_VERSION=3.9.16
